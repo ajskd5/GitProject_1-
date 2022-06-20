@@ -1,4 +1,8 @@
 package com.sist.dao;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 /*
  *  오라클 (SQL) => 데이터를 저장하는 장소 (서버 => 모든 데이터 공유)
  *  
@@ -53,15 +57,46 @@ package com.sist.dao;
  */
 import java.util.*;
 public class MainClass1 {
-
+	//전체 데이터 읽기
 	public static void main(String[] args) {
-		//전체 데이터 읽기
+		Scanner scan = new Scanner(System.in);
+		System.out.print("이름 입력 : ");
+		String name = scan.next();
+		name = name.toUpperCase(); // emp ename에 이름은 다 대문자로 되어 있음
+		
 		try {
 			// 드라이버 등록
-			Class.forName("oracle.jdbc.dirver.OracleDriver");
+			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			// 연결
 			String url= "jdbc:oracle:thin:@localhost:1521:xe";
+			Connection conn = DriverManager.getConnection(url, "hr", "happy");
+
+			// SQL 문장
+//			String sql = "SELECT * FROM emp";
+			String sql = "SELECT empno, ename, job, hiredate, sal " // 띄어쓰기 주의
+					+ "FROM emp "
+					+ "WHERE ename IN('WARD', 'SCOTT')";
+//					+ "WHERE ename LIKE '%'||?||'%'"; // LIKE문장이 다름
+			// SQL 문장 전송
+			PreparedStatement ps = conn.prepareStatement(sql);
+//			ps.setString(1, name); // ?에 값 넣음
+			
+			// 실행 후 결과값 가져옴
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println(
+						rs.getInt(1) + " "
+						+ rs.getString(2) + " "
+						+ rs.getString(3) + " "
+						+ rs.getDate(4) + " "
+						+ rs.getInt(5)
+						);
+			}
+			rs.close();
+			ps.close();
+			conn.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
