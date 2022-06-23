@@ -48,8 +48,9 @@ public class MusicSystem {
 	}
 	
 	public static void main(String[] args) {
-		ArrayList<Music> list = musicListData(2, 7);
+		ArrayList<Music> list = musicListData(1, 1);
 		for(Music m : list) {
+			System.out.println("asdf");
 			System.out.println(m.getMno() + ". " + m.getTitle());
 		}
 	}

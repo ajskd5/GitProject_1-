@@ -1,11 +1,19 @@
 package com.sist.client;
 
-import java.awt.Color;
+import java.awt.*;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class ControllerPanel extends JPanel {
-	public ControllerPanel() {
-		setBackground(Color.yellow);
-	}
+		CardLayout card = new CardLayout();
+		public HomeForm hf;
+		public DetailForm df;
+		
+		public ControllerPanel() {
+			hf = new HomeForm(this);
+			df = new DetailForm(this);
+			setLayout(card);
+			add("HF", hf);
+			add("DF", df);
+		}
 }

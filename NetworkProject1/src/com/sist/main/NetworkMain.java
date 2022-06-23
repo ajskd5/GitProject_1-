@@ -1,14 +1,21 @@
 package com.sist.main;
 import com.sist.client.*;
+import com.sist.data.SeoulLocationVO;
+import com.sist.data.SeoulSystem;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
-public class NetworkMain extends JFrame {
+public class NetworkMain extends JFrame implements ActionListener{
 	MenuForm menu = new MenuForm();
 	ControllerPanel cp = new ControllerPanel();
 	WaitForm wr = new WaitForm();
-	
+	int curpage = 1;
+	int totalpage = 0;
+
 	public NetworkMain() {
 		setTitle("네트워크 명소 프로그램");
 		setLayout(null); // 사용자 정의(직접 배치)
@@ -25,8 +32,21 @@ public class NetworkMain extends JFrame {
 		setSize(1250, 900);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+//		for(int i=0; i<cp.hf.m.length; i++) {
+//			cp.hf.m[i].addActionListener(this);
+//		}
+		cp.hf.b1.addActionListener(this); // 이전
+		cp.hf.b2.addActionListener(this); // 다음
+		
+		totalpage = SeoulSystem.seoulLocationTotalPage();
+		cp.hf.pagLa.setText(curpage + "page / " + totalpage + "pages");
 	}
 	
+	public static Image getImage(ImageIcon ii, int width, int height) {
+		Image dimg = ii.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return dimg;
+	}
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
@@ -37,5 +57,25 @@ public class NetworkMain extends JFrame {
 		new NetworkMain();
 
 	}
-
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == cp.hf.b1) {
+			if(curpage>1) {
+				curpage--;
+				ArrayList<SeoulLocationVO> list = cp.hf.ss.seoulListData(curpage);
+				cp.hf.sm.cardInit(list);
+				cp.hf.sm.cardPrint(list);
+				cp.hf.pagLa.setText(curpage + "page / " + totalpage + "pages");
+			}
+		} else if(e.getSource() == cp.hf.b2) {
+			if(curpage<totalpage) {
+				curpage++;
+				ArrayList<SeoulLocationVO> list = cp.hf.ss.seoulListData(curpage);
+				cp.hf.sm.cardInit(list);
+				cp.hf.sm.cardPrint(list);
+				cp.hf.pagLa.setText(curpage + "page / " + totalpage + "pages");
+			}
+		}
+		
+	}
 }
