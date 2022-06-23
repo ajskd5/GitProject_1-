@@ -10,6 +10,7 @@ public class NetworkMain extends JFrame {
 	WaitForm wr = new WaitForm();
 	
 	public NetworkMain() {
+		setTitle("네트워크 명소 프로그램");
 		setLayout(null); // 사용자 정의(직접 배치)
 		menu.setBounds(10, 15, 100, 350);
 		add(menu);
