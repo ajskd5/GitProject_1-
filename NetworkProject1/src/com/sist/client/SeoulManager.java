@@ -1,8 +1,7 @@
 package com.sist.client;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.net.URL;
 import java.util.ArrayList;
 import com.sist.data.*;
@@ -29,7 +28,6 @@ public class SeoulManager extends JPanel implements MouseListener{
 			pan.add(seouls[i]);
 			seouls[i].addMouseListener(this);
 			i++;
-			
 		}
 		
 		pan.setBounds(10, 35, 840, 730);

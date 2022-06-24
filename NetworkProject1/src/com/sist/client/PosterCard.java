@@ -5,7 +5,7 @@ import java.net.URL;
 
 import javax.swing.*;
 
-import com.sist.data.SeoulLocationVO;
+import com.sist.data.*;
 import com.sist.main.NetworkMain;
 
 public class PosterCard extends JPanel {

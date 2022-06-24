@@ -3,7 +3,7 @@ package com.sist.client;
 import javax.swing.*;
 import java.awt.*;
 public class MenuForm extends JPanel {
-	JButton homeBtn, musicBtn, chatBtn, exitBtn, newsBtn;
+	public JButton homeBtn, musicBtn, chatBtn, exitBtn, newsBtn;
 	// 초기화
 	public MenuForm() {
 		setLayout(new GridLayout(5, 1, 10, 10));

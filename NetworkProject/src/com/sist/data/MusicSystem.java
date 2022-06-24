@@ -1,7 +1,10 @@
 package com.sist.data;
 //  데이터 읽어오기
 import java.util.ArrayList;
+
 import java.io.*;
+
+//DAO => 웹(오라클)
 public class MusicSystem {
 	private static ArrayList<Music> list = new ArrayList<Music>();
 	
@@ -54,4 +57,26 @@ public class MusicSystem {
 			System.out.println(m.getMno() + ". " + m.getTitle());
 		}
 	}
+	
+	public static ArrayList<Music> musicFind(String fd) {
+		ArrayList<Music> fList = new ArrayList<Music>();
+		for(Music m : list) {
+			if(m.getTitle().contains(fd)) {
+				fList.add(m);
+			}
+		}
+		return fList;
+	}
+	
+	//데이터 관리 => 웹 (자바 기능 => 데이터 관리)
+	// 파일(일반 자바) / 데이터베이스(웹)
+	public static ArrayList<Music> musicTop10(){
+		ArrayList<Music> tList = new ArrayList<Music>();
+		for(int i=0; i<10; i++) {
+			Music m = list.get(i);
+			tList.add(m);
+		}
+		return tList;
+	}
+	
 }

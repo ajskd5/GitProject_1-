@@ -13,7 +13,7 @@ public class PosterCard extends JPanel {
 	
 	public PosterCard(Music m) {
 		setLayout(null);
-		
+
 		poster.setBounds(5,  5, 168, 170);
 //		poster.setOpaque(true);
 //		poster.setBackground(Color.pink);

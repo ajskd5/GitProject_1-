@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class NetworkMain extends JFrame implements ActionListener{
-	MenuForm menu = new MenuForm();
 	ControllerPanel cp = new ControllerPanel();
+	MenuForm menu = new MenuForm();
 	WaitForm wr = new WaitForm();
 	int curpage = 1;
 	int totalpage = 0;
@@ -33,9 +33,7 @@ public class NetworkMain extends JFrame implements ActionListener{
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-//		for(int i=0; i<cp.hf.m.length; i++) {
-//			cp.hf.m[i].addActionListener(this);
-//		}
+
 		cp.hf.b1.addActionListener(this); // 이전
 		cp.hf.b2.addActionListener(this); // 다음
 		
@@ -62,7 +60,7 @@ public class NetworkMain extends JFrame implements ActionListener{
 		if(e.getSource() == cp.hf.b1) {
 			if(curpage>1) {
 				curpage--;
-				ArrayList<SeoulLocationVO> list = cp.hf.ss.seoulListData(curpage);
+				ArrayList<SeoulLocationVO> list = cp.hf.ss.seoulLocationListData(curpage);
 				cp.hf.sm.cardInit(list);
 				cp.hf.sm.cardPrint(list);
 				cp.hf.pagLa.setText(curpage + "page / " + totalpage + "pages");
@@ -70,7 +68,7 @@ public class NetworkMain extends JFrame implements ActionListener{
 		} else if(e.getSource() == cp.hf.b2) {
 			if(curpage<totalpage) {
 				curpage++;
-				ArrayList<SeoulLocationVO> list = cp.hf.ss.seoulListData(curpage);
+				ArrayList<SeoulLocationVO> list = cp.hf.ss.seoulLocationListData(curpage);
 				cp.hf.sm.cardInit(list);
 				cp.hf.sm.cardPrint(list);
 				cp.hf.pagLa.setText(curpage + "page / " + totalpage + "pages");
