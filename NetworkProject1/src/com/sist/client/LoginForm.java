@@ -16,8 +16,8 @@ public class LoginForm extends JFrame {
 		rb2 = new JRadioButton("여자");
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rb1); bg.add(rb2);
-		
 		rb1.setSelected(true);
+		
 		
 		b1 = new JButton("로그인");
 		b2 = new JButton("취소");

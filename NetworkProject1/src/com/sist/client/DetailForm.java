@@ -29,6 +29,7 @@ public class DetailForm extends JPanel implements ActionListener {
 
 		b1.addActionListener(this);
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == b1) {

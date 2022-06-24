@@ -9,7 +9,7 @@ POSTER  NOT NULL VARCHAR2(300)
 MSG     NOT NULL VARCHAR2(4000) 
 ADDRESS NOT NULL VARCHAR2(300)
  */
-public class SeoulNatureVO implements Serializable{
+public class SeoulDataVO implements Serializable{
     private int no, cno;
     public int getCno() {
 		return cno;

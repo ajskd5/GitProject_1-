@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import com.sist.data.*;
 import com.sist.main.NetworkMain;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class SeoulManager extends JPanel implements MouseListener{
 	public PosterCard[] seouls = new PosterCard[15];
 	public JPanel pan = new JPanel();
 	public ControllerPanel cp;
+	public int cno;
 	public SeoulManager(ControllerPanel cp) {
 		this.cp = cp;
 	}
@@ -22,7 +22,8 @@ public class SeoulManager extends JPanel implements MouseListener{
 		setLayout(null);
 //		JPanel p = new JPanel();
 		pan.setLayout(new GridLayout(3, 5));
-		int i=0;
+		int i = 0;
+		cno = 1;
 		for(SeoulLocationVO l : list) {
 			seouls[i] = new PosterCard(l);
 			pan.add(seouls[i]);
@@ -44,6 +45,33 @@ public class SeoulManager extends JPanel implements MouseListener{
 		pan.removeAll();
 		pan.validate();
 	}
+	
+	public void cardNaturePrint(ArrayList<SeoulNatureVO> list2) {
+		setLayout(null);
+//		JPanel p = new JPanel();
+		pan.setLayout(new GridLayout(3, 5));
+		int i = 0;
+		cno = 2;
+		for(SeoulNatureVO l : list2) {
+			seouls[i] = new PosterCard(l);
+			pan.add(seouls[i]);
+			seouls[i].addMouseListener(this);
+			i++;
+		}
+		
+		pan.setBounds(10, 35, 840, 730);
+		add(pan);
+	}
+	public void cardNatureInit(ArrayList<SeoulNatureVO> list2) {
+
+		for(int i=0; i<list2.size(); i++) {
+			seouls[i].poster.setIcon(null);
+			seouls[i].title.setText("");
+			seouls[i].msg.setText("");
+		}
+		pan.removeAll();
+		pan.validate();
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -51,21 +79,41 @@ public class SeoulManager extends JPanel implements MouseListener{
 			if(e.getSource() == seouls[i]) {
 				String title = seouls[i].title.getText();
 				for(int j=0; j<SeoulSystem.getList().size(); j++) {
-					SeoulLocationVO l = SeoulSystem.getList().get(j);
-					if(l.getTitle().equals(title)) {
-						cp.df.title.setText("앨범 : " + l.getTitle());
-						cp.df.msg.setText("설명 : " + l.getMsg());
-						cp.df.address.setText("주소 : " + l.getAddress());
-						
-						try {
-							URL url = new URL(l.getPoster());
-							Image img = NetworkMain.getImage(new ImageIcon(url), 350, 250);
-							cp.df.posterLa.setIcon(new ImageIcon(img));
-						} catch (Exception ex) {
-							// TODO: handle exception
+					if(cno == 1) {
+						SeoulLocationVO l = SeoulSystem.getList().get(j);
+						if(l.getTitle().equals(title)) {
+							cp.df.title.setText("앨범 : " + l.getTitle());
+							cp.df.msg.setText("설명 : " + l.getMsg());
+							cp.df.address.setText("주소 : " + l.getAddress());
+							
+							try {
+								URL url = new URL(l.getPoster());
+								Image img = NetworkMain.getImage(new ImageIcon(url), 350, 250);
+								cp.df.posterLa.setIcon(new ImageIcon(img));
+							} catch (Exception ex) {
+								// TODO: handle exception
+							}
+							break;
 						}
-						break;
+					} else if(cno == 2){
+						SeoulNatureVO l = SeoulSystem.getList2().get(j);
+						if(l.getTitle().equals(title)) {
+							cp.df.title.setText("앨범 : " + l.getTitle());
+							cp.df.msg.setText("설명 : " + l.getMsg());
+							cp.df.address.setText("주소 : " + l.getAddress());
+							
+							try {
+								URL url = new URL(l.getPoster());
+								Image img = NetworkMain.getImage(new ImageIcon(url), 350, 250);
+								cp.df.posterLa.setIcon(new ImageIcon(img));
+							} catch (Exception ex) {
+								// TODO: handle exception
+							}
+							break;
+						}
 					}
+					
+					//원래 여기 하나
 				}
 				cp.card.show(cp, "DF");
 			}

@@ -3,6 +3,8 @@ import java.io.*; // 통신 => 메모리 / 파일 / 네트워크
 import java.util.*; // StringTokenizer
 
 import com.sist.common.Function;
+import com.sist.data.*;
+
 
 import java.net.*; // 네트워크
 /*
@@ -42,13 +44,16 @@ public class Server implements Runnable {
 				Socket s = ss.accept(); // 클라이언트가 접속시에 호출
 				//클라이언트에 대한 정보 (IP, PORT => Socket)
 				// s => Thread 에 전송 후 통신이 가능하게 만듦
+				Client client = new Client(s);
+				client.start();
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
 	public static void main(String[] args) {
-		
+		Server server = new Server();
+		new Thread(server).start();
 		
 	}
 
@@ -68,6 +73,7 @@ public class Server implements Runnable {
 				//클라이언트 => 서버 정보
 			} catch (Exception e) {
 				// TODO: handle exception
+				
 			}
 		}
 		
@@ -87,14 +93,42 @@ public class Server implements Runnable {
 					//send.jsp
 					//end.jsp
 					switch(protocol) {
-					case Function.LOGIN: // 로그인 처리
-						break;
-					case Function.CHAT: // 채팅 처리
-						break;
+					case Function.LOGIN: { // 로그인 처리
+						id = st.nextToken();
+						name = st.nextToken();
+						sex = st.nextToken();
+						
+						// 받은 값을 접속한 모든 사람에게 전송
+						messageAll(Function.LOGIN + "|" + id + "|" + name + "|" + sex);
+						// 저장
+						waitVc.add(this);
+						// 로그인하는 사람 처리
+						messageTo(Function.MYLOG + "|" + name);
+						for(Client client : waitVc) {
+							messageTo(Function.LOGIN + "|" + client.id + "|" + client.name + "|" + client.sex);
+						}
+					}
+					break;
+					case Function.CHAT: { // 채팅 처리
+						messageAll(Function.CHAT + "|[" + name +"]" + st.nextToken());
+					}
+					break;
 					case Function.SEND: // 쪽지 보내기
 						break;
-					case Function.END: // 종료하기
-						break;
+					case Function.END: { // 종료하기
+						messageAll(Function.END + "|" + id);
+						for(int i=0; i<waitVc.size(); i++) {
+							Client c = waitVc.get(i);
+							if(id.equals(c.id)) {
+								messageTo(Function.MYEND + "|");
+								waitVc.remove(i);
+								in.close();
+								out.close();
+								break;
+							}
+						}
+					}
+					break;
 					}
 				}
 			} catch (Exception e) {

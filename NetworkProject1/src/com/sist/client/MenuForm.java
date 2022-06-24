@@ -10,16 +10,14 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class MenuForm extends JPanel {
-	public JButton homeBtn, locBtn, natureBtn, chatBtn, newsBtn, exitBtn;
-
-	int totalpage = 0;
-	int curpage = 1;
+	public JButton homeBtn, locFindBtn, natFindBtn, natureBtn, chatBtn, newsBtn, exitBtn;
 	// 초기화
 	public MenuForm() {
-		setLayout(new GridLayout(6, 1, 10, 10));
-		homeBtn = new JButton("홈");
+		setLayout(new GridLayout(7, 1, 10, 10));
+		homeBtn = new JButton("명소");
 		// <input type = button value = "홈"> HTML태그
-		locBtn = new JButton("명소");
+		locFindBtn = new JButton("명소 검색");
+		natFindBtn = new JButton("자연 검색");
 		natureBtn = new JButton("자연");
 		chatBtn = new JButton("채팅");
 		exitBtn = new JButton("종료");
@@ -27,8 +25,9 @@ public class MenuForm extends JPanel {
 		
 		// 배치
 		add(homeBtn);
-		add(locBtn);
 		add(natureBtn);
+		add(locFindBtn);
+		add(natFindBtn);
 		add(chatBtn);
 		add(newsBtn);
 		add(exitBtn);

@@ -1,49 +1,59 @@
 package com.sist.client;
 
 import java.awt.*;
+import java.net.URL;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.table.*;
+
+import com.sist.data.*;
+import com.sist.main.NetworkMain;
 // Network 연결
 public class WaitForm extends JPanel {
 	JTable table;
 	DefaultTableModel model;
-	JTextArea ta;
-	JTextField tf;
-	JButton b1, b2;
-	
+	JLabel la=new JLabel("추천 명소 Top10",JLabel.CENTER);
 	public WaitForm() {
-		String[] col = {"이름", "아이디", "성별"};
-		String[][] row = new String[0][3];
-		model = new DefaultTableModel(row, col);
+		String[] col = {"", "추천 명소"};
+		String[][] row = new String[0][2];
+		model = new DefaultTableModel(row, col) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				return getValueAt(0, columnIndex).getClass();
+			}
+		};
 		table = new JTable(model);
+		table.setRowHeight(50);
 		JScrollPane js1 = new JScrollPane(table);
-		
-		ta = new JTextArea();
-//		ta.setEnabled(false);
-		ta.setEditable(false);
-		JScrollPane js2 = new JScrollPane(ta);
-		
-		tf = new JTextField();
-		
-		b1 = new JButton("쪽지 보내기");
-		b2 = new JButton("정보 보기");
-		
+	
 		// 배치
 		setLayout(null); // 배치 사용자 정의
-		js2.setBounds(0, 15, 250, 250);
-		add(js2);
-		
-		tf.setBounds(0, 270, 250, 30);
-		add(tf);
-		
-		js1.setBounds(0, 320, 250, 250);
-		add(js1);
-		
-		JPanel p = new JPanel();
-		p.add(b1);
-		p.add(b2);
-		p.setBounds(0, 580, 250, 35);
-		add(p);
+
+		la.setBounds(0, 65, 250, 30);
+    	js1.setBounds(0, 100 , 250, 500);
+    	add(js1);
+    	add(la);
+    	try {
+			ArrayList<SeoulLocationVO> list = SeoulSystem.seoulTop10();
+			for(SeoulLocationVO l : list) {
+				URL url = new URL(l.getPoster());
+				Image img=NetworkMain.getImage(
+    					new ImageIcon(url), 50, 45);
+    			Object[] data= {
+    				new ImageIcon(img),
+    				l.getTitle()
+    			};
+    			model.addRow(data);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		
 	}
 }
