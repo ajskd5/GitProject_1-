@@ -13,7 +13,15 @@ import javax.swing.*;
 
 public class NetworkMain extends JFrame implements ActionListener, Runnable{
 	ControllerPanel cp = new ControllerPanel();
-	MenuForm menu = new MenuForm();
+//	MenuForm menu = new MenuForm();
+	JMenuItem loc = new JMenuItem("명소");
+	JMenuItem nat = new JMenuItem("관광지");
+	JMenuItem locfind = new JMenuItem("명소 검색");
+	JMenuItem natfind = new JMenuItem("관광지 검색");
+	JMenuItem chat = new JMenuItem("채팅");
+	JMenuItem news = new JMenuItem("뉴스");
+	JMenuItem exit = new JMenuItem("종료");
+	
 	WaitForm wr = new WaitForm();
 	LoginForm lf = new LoginForm();
 	SendForm sf=new SendForm();
@@ -27,11 +35,30 @@ public class NetworkMain extends JFrame implements ActionListener, Runnable{
 	OutputStream out;
 	public NetworkMain() {
 		setTitle("네트워크 명소 프로그램");
-		setLayout(null); // 사용자 정의(직접 배치)
-		menu.setBounds(10, 15, 100, 350);
-		add(menu);
+		setLayout(null); // 사용자 정의(직접 배치
+		JMenuBar bar =new JMenuBar();
+		JMenu menu = new JMenu("메뉴");
+		menu.add(loc);
+		menu.addSeparator();
+		menu.add(nat);
+		menu.addSeparator();
+		menu.add(locfind);
+		menu.addSeparator();
+		menu.add(natfind);
+		menu.addSeparator();
+		menu.add(chat);
+		menu.addSeparator();
+		menu.add(news);
+		menu.addSeparator();
+		menu.add(exit);
+		menu.addSeparator();
 		
-		cp.setBounds(120, 15, 850, 820);
+		bar.add(menu);
+		setJMenuBar(bar);
+//		menu.setBounds(10, 15, 100, 350);
+//		add(menu);
+		
+		cp.setBounds(10, 15, 960, 820);
 		add(cp);
 		
 		wr.setBounds(980, 15, 250, 700);
@@ -53,15 +80,15 @@ public class NetworkMain extends JFrame implements ActionListener, Runnable{
 		cp.hf.pagLa.setText(curpage + "page / " + totalpage + "pages");
 		
 		totalpage2 = SeoulSystem.seoulNatureTotalPage();
-		cp.ntf.pagLa.setText(curpage + "page / " + totalpage + "pages");
-		
-		menu.chatBtn.addActionListener(this);
-		menu.exitBtn.addActionListener(this);
-		menu.homeBtn.addActionListener(this);
-		menu.locFindBtn.addActionListener(this);
-		menu.natFindBtn.addActionListener(this);
-		menu.natureBtn.addActionListener(this);
-		menu.newsBtn.addActionListener(this);
+		cp.ntf.pagLa.setText(curpage + "page / " + totalpage2 + "pages");
+
+		chat.addActionListener(this);
+		exit.addActionListener(this);
+		loc.addActionListener(this);
+		locfind.addActionListener(this);
+		natfind.addActionListener(this);
+		nat.addActionListener(this);
+		news.addActionListener(this);
 		
 		cp.lff.btn.addActionListener(this);
 		cp.nff.btn.addActionListener(this);
@@ -120,31 +147,31 @@ public class NetworkMain extends JFrame implements ActionListener, Runnable{
 				cp.ntf.pagLa.setText(curpage + "page / " + totalpage2 + "pages");
 			}
 		} else if(e.getSource() == cp.ntf.b2) {
-			if(curpage<totalpage) {
+			if(curpage<totalpage2) {
 				curpage++;
 				ArrayList<SeoulNatureVO> list = cp.ntf.ss.seoulNatureListData(curpage);
 				cp.ntf.sm.cardNatureInit(list);
 				cp.ntf.sm.cardNaturePrint(list);
 				cp.ntf.pagLa.setText(curpage + "page / " + totalpage2 + "pages");
 			}
-		} else if(e.getSource() == menu.chatBtn) {
+		} else if(e.getSource() == chat) {
 			cp.card.show(cp,"CF");
-		} else if(e.getSource() == menu.newsBtn) {
+		} else if(e.getSource() == news) {
 			cp.card.show(cp, "NF");
-		} else if(e.getSource() == menu.exitBtn) {
+		} else if(e.getSource() == exit) {
 			try
 			{
 				out.write((Function.END+"|\n").getBytes());
 			}catch(Exception ex){}
-		} else if(e.getSource() == menu.homeBtn) {
+		} else if(e.getSource() == loc) {
 			cp.card.show(cp, "HF");
-		} else if(e.getSource() == menu.natureBtn) {
+		} else if(e.getSource() == nat) {
 			cp.card.show(cp, "NTF");
 		} else if(e.getSource()==cp.cf.b1) {
 			sf.setVisible(true);
-		} else if(e.getSource() == menu.locFindBtn) {
+		} else if(e.getSource() == locfind) {
 			cp.card.show(cp, "LFF"); // 검색
-		} else if(e.getSource() == menu.natFindBtn) {
+		} else if(e.getSource() == natfind) {
 			cp.card.show(cp, "NFF"); // 검색
 		} else if(e.getSource() == cp.lff.btn) {
 			String fd = cp.lff.tf.getText();
@@ -265,7 +292,7 @@ public class NetworkMain extends JFrame implements ActionListener, Runnable{
 			{
 				// 서버에서 보내주는 데이터를 받는다 
 				String msg=in.readLine();
-				System.out.println(msg);
+//				System.out.println(msg);
 				StringTokenizer st=new StringTokenizer(msg,"|");
 				int protocol=Integer.parseInt(st.nextToken());
 				switch(protocol)

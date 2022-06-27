@@ -11,7 +11,7 @@ import java.io.Serializable;
  
  */
 public class SeoulLocationVO implements Serializable{
-    private int no, cno;
+    private int no;
     private String title,poster,msg,address;
 	public int getNo() {
 		return no;
@@ -42,12 +42,6 @@ public class SeoulLocationVO implements Serializable{
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public int getCno() {
-		return cno;
-	}
-	public void setCno(int cno) {
-		this.cno = cno;
 	}
 	   
 }

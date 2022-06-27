@@ -38,7 +38,7 @@ public class NaverNewsMain {
         String responseBody = get(apiURL,requestHeaders);
 
 
-        System.out.println(responseBody);
+//        System.out.println(responseBody);
         return responseBody;
 	}
 	public static ArrayList<News> newsAllData(String ss) {
@@ -50,11 +50,11 @@ public class NaverNewsMain {
         	JSONParser jp=new JSONParser();
         	JSONObject root=(JSONObject)jp.parse(json);
         	JSONArray arr=(JSONArray)root.get("items");
-        	System.out.println(arr.size());
+//        	System.out.println(arr.size());
         	for(int i=0;i<arr.size();i++)
         	{
         		JSONObject obj=(JSONObject)arr.get(i);
-        		System.out.println(obj.get("title"));
+//        		System.out.println(obj.get("title"));
         		//System.out.println(obj.get("link"));
         		String desc=(String)obj.get("description");
         		desc=desc.replaceAll("[^가-힣 ]", "");
@@ -64,7 +64,7 @@ public class NaverNewsMain {
         		desc=desc.replace("&", "");
         		desc=desc.replace(";", "");
         		desc=desc.replaceAll("[A-Za-z]", "");
-        		System.out.println(desc);
+//        		System.out.println(desc);
         		//String d=(String)obj.get("pubDate");
         		//Date date=new Date(d);
         		//System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(date));

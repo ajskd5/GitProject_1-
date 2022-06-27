@@ -14,8 +14,8 @@ public class SeoulMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         SeoulMain sm=new SeoulMain();
-//        sm.seoulAttractions();
-//        sm.seoulNature();
+        sm.seoulAttractions();
+        sm.seoulNature();
 //        sm.seoulHotel();
 //        sm.seoulData();
 	}
@@ -28,7 +28,7 @@ public class SeoulMain {
 		try
 		{
 			int k=1;
-			int c = 1;
+
 			for(int i=1;i<=35;i++)
 			{
 			   Document doc=Jsoup.connect("https://korean.visitseoul.net/attractions?curPage="+i).get();
@@ -50,7 +50,6 @@ public class SeoulMain {
 					   System.out.println("=========================================================");
 				       
 					   SeoulLocationVO vo=new SeoulLocationVO();
-					   vo.setCno(c);
 					   vo.setNo(k);
 					   vo.setTitle(title.get(j).text());
 					   vo.setMsg(comment.get(j).text());
@@ -159,7 +158,7 @@ public class SeoulMain {
 		try
 		{
 			int k=1;
-			int c = 2;
+
 			for(int i=1;i<=14;i++)
 			{
 			   Document doc=Jsoup.connect("https://korean.visitseoul.net/nature?curPage="+i).get();
@@ -196,7 +195,7 @@ public class SeoulMain {
 				   System.out.println("주소:"+address.text());
 				   System.out.println("=========================================================");
 			       SeoulNatureVO vo=new SeoulNatureVO();
-			       vo.setCno(c);
+
 			       vo.setNo(k);
 			       vo.setTitle(title.get(j).text());
 			       vo.setAddress(address.text());

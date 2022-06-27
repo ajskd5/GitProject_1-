@@ -35,7 +35,7 @@ public class LocationFindForm extends JPanel {
 	public LocationFindForm() {
 		tf = new JTextField();
 		btn = new JButton("검색");
-		String[] col = {"순위", "", "title", "msg"};
+		String[] col = {"순위", "", "명소", "설명"};
 		// int ImageIcon String String
 		Object[][] row = new String [0][4];
 		model = new DefaultTableModel(row, col) {

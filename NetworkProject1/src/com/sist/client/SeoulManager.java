@@ -82,7 +82,7 @@ public class SeoulManager extends JPanel implements MouseListener{
 					if(cno == 1) {
 						SeoulLocationVO l = SeoulSystem.getList().get(j);
 						if(l.getTitle().equals(title)) {
-							cp.df.title.setText("앨범 : " + l.getTitle());
+							cp.df.title.setText("명소 : " + l.getTitle());
 							cp.df.msg.setText("설명 : " + l.getMsg());
 							cp.df.address.setText("주소 : " + l.getAddress());
 							
@@ -98,7 +98,7 @@ public class SeoulManager extends JPanel implements MouseListener{
 					} else if(cno == 2){
 						SeoulNatureVO l = SeoulSystem.getList2().get(j);
 						if(l.getTitle().equals(title)) {
-							cp.df.title.setText("앨범 : " + l.getTitle());
+							cp.df.title.setText("관광지 : " + l.getTitle());
 							cp.df.msg.setText("설명 : " + l.getMsg());
 							cp.df.address.setText("주소 : " + l.getAddress());
 							

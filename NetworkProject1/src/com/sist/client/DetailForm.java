@@ -12,7 +12,6 @@ public class DetailForm extends JPanel implements ActionListener {
 	JButton b1 = new JButton("목록");
 	public DetailForm(ControllerPanel cp) {
 		this.cp = cp;
-		
 		setLayout(null);
 		posterLa.setBounds(10, 15, 350, 250);
 		title.setBounds(365, 15, 400, 35);

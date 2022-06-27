@@ -23,7 +23,7 @@ public class HomeForm extends JPanel {
 //		natBtn = new JButton("자연");
 //		p.add(locBtn); p.add(natBtn);
 //		String[] title = {"Top100", "가요", "POP", "OST", "트롯", "JAZZ", "CLASSIC"};
-//		for(int i=0; i<l.length; i++) {
+//		for(int i=0; i<l.length; i++) { 
 //			l[i] = new JButton(title[i]);
 //			p.add(l[i]);
 //		}

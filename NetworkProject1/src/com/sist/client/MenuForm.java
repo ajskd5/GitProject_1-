@@ -17,8 +17,8 @@ public class MenuForm extends JPanel {
 		homeBtn = new JButton("명소");
 		// <input type = button value = "홈"> HTML태그
 		locFindBtn = new JButton("명소 검색");
-		natFindBtn = new JButton("자연 검색");
-		natureBtn = new JButton("자연");
+		natFindBtn = new JButton("관광지 검색");
+		natureBtn = new JButton("자연 & 관광");
 		chatBtn = new JButton("채팅");
 		exitBtn = new JButton("종료");
 		newsBtn = new JButton("뉴스"); // JSON => 네이버뉴스 (openApi)

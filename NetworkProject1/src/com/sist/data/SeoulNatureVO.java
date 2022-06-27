@@ -10,13 +10,7 @@ MSG     NOT NULL VARCHAR2(4000)
 ADDRESS NOT NULL VARCHAR2(300)
  */
 public class SeoulNatureVO implements Serializable{
-    private int no, cno;
-    public int getCno() {
-		return cno;
-	}
-	public void setCno(int cno) {
-		this.cno = cno;
-	}
+    private int no;
 	private String title,poster,msg,address;
 	public int getNo() {
 		return no;
