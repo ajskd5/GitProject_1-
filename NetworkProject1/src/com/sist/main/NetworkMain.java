@@ -35,7 +35,7 @@ public class NetworkMain extends JFrame implements ActionListener, Runnable{
 	OutputStream out;
 	public NetworkMain() {
 		setTitle("네트워크 명소 프로그램");
-		setLayout(null); // 사용자 정의(직접 배치
+		setLayout(null); // 사용자 정의(직접 배치)
 		JMenuBar bar =new JMenuBar();
 		JMenu menu = new JMenu("메뉴");
 		menu.add(loc);
