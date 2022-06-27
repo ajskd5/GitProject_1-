@@ -88,7 +88,7 @@ public class SeoulManager extends JPanel implements MouseListener{
 							
 							try {
 								URL url = new URL(l.getPoster());
-								Image img = NetworkMain.getImage(new ImageIcon(url), 350, 250);
+								Image img = NetworkMain.getImage(new ImageIcon(url), 550, 450);
 								cp.df.posterLa.setIcon(new ImageIcon(img));
 							} catch (Exception ex) {
 								// TODO: handle exception
@@ -104,7 +104,7 @@ public class SeoulManager extends JPanel implements MouseListener{
 							
 							try {
 								URL url = new URL(l.getPoster());
-								Image img = NetworkMain.getImage(new ImageIcon(url), 350, 250);
+								Image img = NetworkMain.getImage(new ImageIcon(url), 550, 450);
 								cp.df.posterLa.setIcon(new ImageIcon(img));
 							} catch (Exception ex) {
 								// TODO: handle exception

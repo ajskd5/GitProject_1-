@@ -169,7 +169,9 @@ public class NetworkMain extends JFrame implements ActionListener, Runnable{
 			cp.card.show(cp, "NTF");
 		} else if(e.getSource()==cp.cf.b1) {
 			sf.setVisible(true);
-		} else if(e.getSource() == locfind) {
+		} else if(e.getSource()==cp.cf.b2) {
+			JOptionPane.showMessageDialog(this, "이름 : 홍길동\n성별:남자\nID:hong");
+		}  else if(e.getSource() == locfind) {
 			cp.card.show(cp, "LFF"); // 검색
 		} else if(e.getSource() == natfind) {
 			cp.card.show(cp, "NFF"); // 검색
