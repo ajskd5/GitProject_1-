@@ -277,5 +277,26 @@ public class BoardDAO {
 	}
 	
 	// 7. 찾기 =======> LIKE
+	public void boardSearch(String fd, String ss) {
+		try {
+			getConnection();
+
+			String sql = "SELECT name, subject, content "
+					+ "FROM freeboard "
+					+ "WHERE " + fd + " LIKE '%'||?||'%'";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, ss);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			System.out.println(rs.getString(1));
+			System.out.println(rs.getString(2));
+			System.out.println(rs.getString(3));
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+	}
 	// JOIN
 }

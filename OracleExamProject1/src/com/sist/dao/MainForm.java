@@ -51,6 +51,9 @@ public class MainForm extends JFrame implements ActionListener, MouseListener {
     	up.b1.addActionListener(this);
     	up.b2.addActionListener(this);
     	
+    	//검색
+    	bf.b3.addActionListener(this);
+    	
     	boardListData();
     	
     }
@@ -198,6 +201,22 @@ public class MainForm extends JFrame implements ActionListener, MouseListener {
 			
 		} else if(e.getSource() == up.b2) { // 수정 취소
 			card.show(getContentPane(), "DF");
+		}
+		// 검색
+		else if(e.getSource() == bf.b3) {
+			String ss = bf.tf.getText();
+			if(ss.trim().length()<1) {
+				JOptionPane.showMessageDialog(this, "검색어를 입력하세요");
+				bf.tf.requestFocus();
+				return;
+			}
+			// name, subject, content
+			String fd = bf.box.getSelectedItem().toString();
+			
+			// DAO연결 => 결과값 읽기
+			BoardDAO dao = new BoardDAO();
+			dao.boardSearch(fd, ss);
+			// 읽은 결과값 도스창에 출력
 		}
 	}
 
