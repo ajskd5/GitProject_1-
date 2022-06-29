@@ -284,13 +284,16 @@ public class BoardDAO {
 			String sql = "SELECT name, subject, content "
 					+ "FROM freeboard "
 					+ "WHERE " + fd + " LIKE '%'||?||'%'";
+			//LIKE '%" + SS + "%'"   (이렇게도 되는데 ?들어가면 위에처럼 써야함)
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, ss);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
-			System.out.println(rs.getString(1));
-			System.out.println(rs.getString(2));
-			System.out.println(rs.getString(3));
+			while(rs.next()) {
+				System.out.println("이름 : " + rs.getString(1));
+				System.out.println("제목 : " + rs.getString(2));
+				System.out.println("내용 : " + rs.getString(3));
+				System.out.println("==========================");
+			}
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
