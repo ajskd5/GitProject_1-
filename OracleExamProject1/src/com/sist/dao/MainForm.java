@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import com.sist.curd.BoardDAO;
 import com.sist.curd.BoardVO;
-public class MainForm extends JFrame implements ActionListener {
+public class MainForm extends JFrame implements ActionListener, MouseListener {
     CardLayout card=new CardLayout();
     LoginForm login=new LoginForm();
     BoardForm bf=new BoardForm();
@@ -38,6 +38,18 @@ public class MainForm extends JFrame implements ActionListener {
     	in.b1.addActionListener(this);
     	// 글쓰기 취소
     	in.b2.addActionListener(this);
+    	
+    	// 마우스 더블 클릭 (상세보기)
+    	bf.table.addMouseListener(this);
+    	
+    	// 상세보기
+    	df.b1.addActionListener(this); // 수정
+    	df.b2.addActionListener(this); // 삭제
+    	df.b3.addActionListener(this); // 목록
+    	
+    	// 수정하기
+    	up.b1.addActionListener(this);
+    	up.b2.addActionListener(this);
     	
     	boardListData();
     	
@@ -137,7 +149,103 @@ public class MainForm extends JFrame implements ActionListener {
 			card.show(getContentPane(), "BF");
 			//<input type = button value="취소" onclick = "javascript:history.back()">
 		}
+		//상세보기 => 목록
+		else if(e.getSource() == df.b3) {
+			card.show(getContentPane(), "BF");
+			boardListData();
+		} else if(e.getSource() == df.b1) { // 수정
+			BoardDAO dao = new BoardDAO();
+			String no = df.tf1.getText();
+			BoardVO vo = dao.boardDetailData(Integer.parseInt(no), 2);
+			up.tf1.setText(vo.getName());
+			up.tf2.setText(vo.getSubject());
+			up.tf3.setText(String.valueOf(vo.getNo()));
+			up.ta.setText(vo.getContent());
+			
+			card.show(getContentPane(), "UP");
+		} else if(e.getSource() == df.b2) { // 삭제
+			BoardDAO dao = new BoardDAO();
+			String no = df.tf1.getText();
+			dao.boardDelete(Integer.parseInt(no));
+			card.show(getContentPane(), "BF");
+			boardListData();
+		}
+		// 수정하기 (수정, 취소)
+		else if(e.getSource() == up.b1) {
+			String name = up.tf1.getText();
+			String subject = up.tf2.getText();
+			String content = up.ta.getText();
+			String pwd =String.valueOf(up.pf.getPassword());
+			String no = up.tf3.getText();
+			BoardVO vo = new BoardVO();
+			vo.setName(name);
+			vo.setSubject(subject);
+			vo.setContent(content);
+			vo.setPwd(pwd);
+			vo.setNo(Integer.parseInt(no));
+			
+			// DAO연결 => 수정 요청
+			BoardDAO dao = new BoardDAO();
+			boolean bCheck = dao.boardUpdate(vo);
+			if(bCheck == false) { // 비밀번호가 틀린 경우
+				JOptionPane.showMessageDialog(this, "비밀번호가 틀립니다!!");
+				up.pf.setText("");
+				up.pf.requestFocus();
+			} else {
+				card.show(getContentPane(), "BF");
+				boardListData();
+			}
+			
+		} else if(e.getSource() == up.b2) { // 수정 취소
+			card.show(getContentPane(), "DF");
+		}
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) { // 클릭 한번
+		if(e.getSource() == bf.table) {
+			if(e.getClickCount() == 2) { // 더블 클릭
+				int row = bf.table.getSelectedRow(); // 몇번째 줄인지
+				String no = bf.model.getValueAt(row, 0).toString(); //선택된 row가 몇번째 줄인지 가져옴(no값으로 가져와서 String 형변환)
+				BoardDAO dao = new BoardDAO();
+				BoardVO vo = dao.boardDetailData(Integer.parseInt(no), 1);
+				df.tf1.setText(String.valueOf(vo.getNo()));
+				df.tf2.setText(vo.getRegdate().toString());
+				df.tf3.setText(vo.getName());
+				df.tf4.setText(String.valueOf(vo.getHit()));
+				df.tf5.setText(vo.getSubject());
+				df.ta.setText(vo.getContent());
+				
+				card.show(getContentPane(), "DF");
+			}
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 
 }

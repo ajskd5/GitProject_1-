@@ -5,7 +5,7 @@ public class UpdateForm extends JPanel{
     JLabel titleLa;
     JLabel la1,la2,la3,la4;
     JButton b1,b2;
-    JTextField tf1,tf2;
+    JTextField tf1,tf2, tf3;
     JTextArea ta;
     JPasswordField pf;
     public UpdateForm()
@@ -22,6 +22,7 @@ public class UpdateForm extends JPanel{
     	JScrollPane js=new JScrollPane(ta);
     	tf1=new JTextField();
     	tf2=new JTextField();
+    	tf3 = new JTextField();//
     	pf=new JPasswordField();
     	
     	setLayout(null);
@@ -29,6 +30,7 @@ public class UpdateForm extends JPanel{
     	titleLa.setFont(new Font("궁서체",Font.BOLD,40));
     	titleLa.setBounds(10, 15, 760, 50);
     	add(titleLa);
+    	add(tf3);//
     	
     	la1.setBounds(10, 70, 70, 30);
     	tf1.setBounds(85, 70, 150, 30);

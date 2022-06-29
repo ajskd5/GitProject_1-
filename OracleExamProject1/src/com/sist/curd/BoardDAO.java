@@ -146,6 +146,49 @@ public class BoardDAO {
 		return list;
 	}
 	// 3. 상세 보기 ==> WHERE
+	public BoardVO boardDetailData(int no, int type){
+		BoardVO vo = new BoardVO();
+		try {
+			getConnection();
+			// 조회수 증가
+			if(type == 1) { // type 1 => 조회수 증가	type 2 => 수정(조회수 증가X)
+				String sql = "UPDATE freeboard SET "
+						+ "hit = hit + 1 "
+						+ "WHERE no = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, no);
+				ps.executeUpdate();
+			}
+			
+			
+			// 실제 데이터 읽기
+			String sql = "SELECT no, name, subject, content, regdate, hit "
+					+ "FROM freeboard "
+					+ "WHERE no = ?";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+
+			vo.setNo(rs.getInt(1));
+			vo.setName(rs.getString(2));
+			vo.setSubject(rs.getString(3));
+			vo.setContent(rs.getString(4));
+			vo.setRegdate(rs.getDate(5));
+			vo.setHit(rs.getInt(6));
+			
+			rs.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return vo;
+	}
+	
 	// 4. 글쓰기 =====> INSERT
 	public void boardInsert(BoardVO vo) {
 		try {
@@ -168,7 +211,7 @@ public class BoardDAO {
 			// 데이터 읽는 기능이 없음(리턴값 : void) executeQuery는 있음
 			// conn.setAutoCommit(false); => 자동 커밋 해제
 			// 나중에 conn.commit(); 함
-					
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -177,7 +220,62 @@ public class BoardDAO {
 	}
 	
 	// 5. 수정 =======> UPDATE
+	public boolean boardUpdate(BoardVO vo) {
+		boolean bCheck = false;
+		try {
+			getConnection();
+			// 비밀번호 맞는지 확인
+			String sql = "SELECT pwd "
+					+ "FROM freeboard "
+					+ "WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, vo.getNo());
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String db_pwd = rs.getString(1);
+			rs.close();
+			
+			if(db_pwd.equals(vo.getPwd())){
+				bCheck = true;
+				// 실제 수정 (비밀 번호가 맞아서)
+				sql = "UPDATE freeboard SET "
+						+ "name = ?, subject = ?, content = ? "
+						+ "WHERE no = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, vo.getName());
+				ps.setString(2, vo.getSubject());
+				ps.setString(3, vo.getContent());
+				ps.setInt(4, vo.getNo());
+				ps.executeUpdate();
+				
+			} else {
+				bCheck = false;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return bCheck;
+	}
+	
 	// 6. 삭제 =======> DELETE
+	public void boardDelete(int no) {
+		try {
+			getConnection();
+			String sql = "DELETE FROM freeboard WHERE no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, no);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+	}
+	
 	// 7. 찾기 =======> LIKE
 	// JOIN
 }
