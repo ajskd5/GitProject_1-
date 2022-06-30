@@ -100,6 +100,134 @@ public class EmpDAO {
 		
 		return list;
 	}
+	
+	// 52번 instr 함수를 이용해서 이름에 A자를 포함하고 있는 사원들의 이름을 출력하시오
+	public List<EmpVO> emp52(){
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		try {
+			getConnection();
+			String sql = "SELECT ename "
+					+ "FROM emp "
+					+ "WHERE INSTR(ename, 'A', 1, 1) > 1";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpVO vo = new EmpVO();
+				vo.setEname(rs.getString(1));
+				list.add(vo);
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return list;
+	}
+	
+	// 54번
+	public List<EmpVO> emp54(){
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		try {
+			getConnection();
+			String sql = "SELECT ename, TO_CHAR(RPAD(sal, 10, '*')) "
+					+ "FROM emp";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpVO vo = new EmpVO();
+				vo.setEname(rs.getString(1));
+				vo.setNum(rs.getString(2));
+				list.add(vo);
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return list;
+	}
+	
+	// 69번
+	public List<EmpVO> emp69(){
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		try {
+			getConnection();
+			String sql = "SELECT ename, hiredate, TO_CHAR(hiredate, 'DAY') "
+					+ "FROM emp "
+					+ "WHERE TO_CHAR(hiredate, 'DAY') = '목요일'";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpVO vo = new EmpVO();
+				vo.setEname(rs.getString(1));
+				vo.setHiredate(rs.getDate(2));
+				vo.setDay(rs.getString(3));
+				list.add(vo);
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return list;
+	}
+	
+	// 73번
+	public List<EmpVO> emp73(){
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		try {
+			getConnection();
+			String sql = "SELECT ename, NVL(comm, 0) "
+					+ "FROM emp";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpVO vo = new EmpVO();
+				vo.setEname(rs.getString(1));
+				vo.setComm(rs.getInt(2));
+				list.add(vo);
+			}
+			rs.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return list;
+	}
+	
+	// 74번
+	public List<EmpVO> emp74(){
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		try {
+			getConnection();
+			String sql = "SELECT ename, NVL(TO_CHAR(comm), 'no comm') "
+					+ "FROM emp";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpVO vo = new EmpVO();
+				vo.setEname(rs.getString(1));
+				vo.setNull_comm(rs.getString(2));
+				list.add(vo);
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return list;
+	}
 }
 
 

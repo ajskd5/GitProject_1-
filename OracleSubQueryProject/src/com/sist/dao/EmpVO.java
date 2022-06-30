@@ -11,6 +11,30 @@ public class EmpVO {
 	private int comm;
 	private int deptno;
 	
+	private String num;
+	private String null_comm;
+	
+	public String getNull_comm() {
+		return null_comm;
+	}
+	public void setNull_comm(String nul_comm) {
+		this.null_comm = nul_comm;
+	}
+
+	public String getNum() {
+		return num;
+	}
+	public void setNum(String num) {
+		this.num = num;
+	}
+	private String day;
+	
+	public String getDay() {
+		return day;
+	}
+	public void setDay(String day) {
+		this.day = day;
+	}
 	public int getEmpno() {
 		return empno;
 	}
