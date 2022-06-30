@@ -1,5 +1,5 @@
 package com.sist.dao;
-import java.util.*;
+
 public class DeptVO {
 	private int dept;
 	private String dname;
