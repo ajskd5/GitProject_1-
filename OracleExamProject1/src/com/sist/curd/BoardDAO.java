@@ -20,7 +20,7 @@ public class BoardDAO {
 	// 오라클 서버 주소
 	private final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
 	
-	// 드라이버 등록 ==> 한번만 서렂ㅇ
+	// 드라이버 등록 ==> 한번만 설정
 	public BoardDAO() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver"); // 리플렉션 (이름등록 => 모든 정보 처리)
@@ -294,6 +294,7 @@ public class BoardDAO {
 				System.out.println("내용 : " + rs.getString(3));
 				System.out.println("==========================");
 			}
+			
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
