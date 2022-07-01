@@ -1,7 +1,6 @@
 package com.sist.main;
 
 import java.util.*;
-
 import com.sist.dao.*;
 
 public class MainClass2 {
