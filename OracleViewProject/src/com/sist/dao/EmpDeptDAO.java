@@ -16,7 +16,7 @@ public class EmpDeptDAO {
 	// 드라이버 등록 => 드라이버 / 서버연결 / 배치 / 멤버변수 초기화 => 생성자
 	public EmpDeptDAO() {
 		try {
-			Class.forName("oracle.jdbc.dirver.OracleDriver");
+			Class.forName("oracle.jdbc.driver.OracleDriver");
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
