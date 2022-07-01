@@ -52,7 +52,7 @@ public class EmpDeptDAO {
 		}
 	}
 	
-	// 싱글톤
+	// 싱글톤 패턴
 	public static EmpDeptDAO newInstance() {
 		if(dao == null) {
 			dao = new EmpDeptDAO();
