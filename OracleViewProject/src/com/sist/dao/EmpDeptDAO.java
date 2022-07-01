@@ -120,6 +120,39 @@ public class EmpDeptDAO {
 		} finally {
 			disConnection();
 		}
+		return list;
+	}
+	
+	// 스칼라 서브쿼리
+	public List<EmpDeptVO> empDeptListData3(){
+		List<EmpDeptVO> list = new ArrayList<EmpDeptVO>();
+		try {
+			getConnection();
+			String sql = "SELECT empno, ename, job, hiredate, sal, "
+					+ "(SELECT dname FROM dept WHERE deptno = emp.deptno) dname, "
+					+ "(SELECT loc FROM dept WHERE deptno = emp.deptno) loc, "
+					+ "(SELECT grade FROM salgrade WHERE emp.sal BETWEEN losal AND hisal) grade "
+					+ "FROM emp";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpDeptVO vo = new EmpDeptVO();
+				vo.setEmpno(rs.getInt(1));
+				vo.setEname(rs.getString(2));
+				vo.setJob(rs.getString(3));
+				vo.setHiredate(rs.getDate(4));
+				vo.setSal(rs.getInt(5));
+				vo.setDname(rs.getString(6));
+				vo.setLoc(rs.getString(7));
+				vo.setGrade(rs.getInt(8));
+				list.add(vo);
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
 		
 		return list;
 	}

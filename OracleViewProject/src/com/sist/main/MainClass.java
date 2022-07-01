@@ -18,8 +18,19 @@ public class MainClass {
 					+ vo.getLoc() + " "
 					+ vo.getGrade());
 		}
+		
 		System.out.println("======== VIEW(복합뷰) ========");
 		list = dao.empDeptListData2();
+		for(EmpDeptVO vo : list) {
+			System.out.println(vo.getEname() + " "
+					+ vo.getDname() + " "
+					+ vo.getJob() + " "
+					+ vo.getLoc() + " "
+					+ vo.getGrade());
+		}
+		
+		System.out.println("======== 스칼라 서브쿼리 ========");
+		list = dao.empDeptListData3();
 		for(EmpDeptVO vo : list) {
 			System.out.println(vo.getEname() + " "
 					+ vo.getDname() + " "
