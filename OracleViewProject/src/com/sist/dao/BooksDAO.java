@@ -90,32 +90,26 @@ public class BooksDAO {
 	// => 1. 페이징, 원하는 갯수만큼
 	public List<BooksVO> booksListData2(int page){
 		List<BooksVO> list = new ArrayList<BooksVO>();
-		long start = System.currentTimeMillis();
+		long s = System.currentTimeMillis();
 		try {
 			getConnection();
-			String sql = "SELECT no, title "
-					+ "FROM books "
-					+ "ORDER BY no ASC";
+			String sql = "SELECT no, title, num "
+					+ "FROM (SELECT no, title, rownum as num "
+					+ "FROM (SELECT no, title "
+					+ "FROM books ORDER BY no ASC)) "
+					+ "WHERE num BETWEEN ? AND ?";
 			ps = conn.prepareStatement(sql);
+			int rowSize = 10;
+			int start = (page*rowSize) - (rowSize-1);
+			int end = rowSize * page;
+			ps.setInt(1, start);
+			ps.setInt(2, end);
 			ResultSet rs = ps.executeQuery();
-			int i = 0; // 10개씩 나눠주는 변수
-			int j = 0; // while 횟수
-			int rowSize = 10; // 갯수
-			int pagecnt = (page*rowSize) - rowSize; // 시작 위치
-			/*
-			 * while / for => 0번부터 시작
-			 * 뒷 페이지 선택해도 앞 부분을 스킵하려면 반복문을 돌려야 함
-			 *  => 느림
-			 */
 			while(rs.next()) {
-				if(i<rowSize && j>=pagecnt) {
-					BooksVO vo = new BooksVO();
-					vo.setNo(rs.getInt(1));
-					vo.setTitle(rs.getString(2));
-					list.add(vo);
-					i++;
-				}
-				j++;
+				BooksVO vo = new BooksVO();
+				vo.setNo(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				list.add(vo);
 			}
 			rs.close();
 		} catch (Exception e) {
@@ -123,8 +117,8 @@ public class BooksDAO {
 		} finally {
 			disConnection();
 		}
-		long end = System.currentTimeMillis();
-		System.out.println("걸린 시간 : " + (end-start));
+		long e = System.currentTimeMillis();
+		System.out.println("걸린 시간 : " + (e-s));
 		return list;
 	}
 	

@@ -27,7 +27,7 @@ public class MainClass2 {
 		System.out.println("\n");
 		
 		
-		List<BooksVO> list = dao.booksListData(page);
+		List<BooksVO> list = dao.booksListData2(page);
 		for(BooksVO vo : list) {
 			System.out.println(vo.getNo() + ". " + vo.getTitle());
 		}
