@@ -26,11 +26,11 @@ public class BooksDAO {
 	}
 	public void disConnection() {
 		try {
-			if(conn != null) {
-				conn.close();
-			}
 			if(ps != null) {
 				ps.close();
+			}
+			if(conn != null) {
+				conn.close();
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
